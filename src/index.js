@@ -10,6 +10,13 @@ const typeDefs = `
     age: Int!
     employed: Boolean!
     gpa: Float
+    me: User!
+  }
+
+  type User {
+    id: ID!
+    name: String!
+    email: String!
   }
 `
 
@@ -29,8 +36,15 @@ const Resolve = {
     },
     gpa() {
       return 3.15
+    },
+    me() {
+      return {
+        id: '123',
+        name: 'Harut',
+        email: 'harut@tpl.com'
+      }
     }
-  }
+  },
 }
 
 const server = new GraphQLServer({
