@@ -63,6 +63,7 @@ const typeDefs = `
 
   type Mutation{
     createUser(name: String!, email: String!, age: Int): User!
+    createPost(title: String!, body: String!, published: Boolean!, author: ID!): Post!
   }
   type User {
     id: ID!
@@ -124,6 +125,25 @@ const Resolve = {
 
       users.push(user);
       return user;
+    },
+    createPost(parent, args, ctx, info){
+      console.log(users);
+      const userExist = users.some(user => user.id === args.author);
+      if (!userExist) {
+        throw new Error('User dont exist')
+      }
+
+      const post = {
+        id: uuidv3(),
+        title: args.title,
+        body: args.body,
+        published: args.published,
+        author: args.author
+      }
+
+      posts.push(post);
+
+      return post;
     }
   },
   Post: {
